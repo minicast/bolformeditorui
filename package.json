@@ -1,0 +1,56 @@
+{
+  "name": "bolformeditorui",
+  "version": "0.0.0",
+  "description": "bolformeditorui",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "babel src/index.jsx -o dist/index.js",
+    "postbuild": "browserify ./dist/index.js -o ./dist/browser.js -v",
+    "commit": "git-cz",
+    "test": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel/register",
+    "test:watch": "mocha src/index.test.js -w --compilers js:babel/register",
+    "check-coverage": "istanbul check-coverage --statements 55 --branches 55 --functions 55 --lines 55",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minicast/bolformeditorui.git"
+  },
+  "keywords": [
+    "bolformeditorui"
+  ],
+  "author": "minicast <minicast@gmx.com> (https://github.com/minicast)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/minicast/bolformeditorui/issues"
+  },
+  "homepage": "https://github.com/minicast/bolformeditorui#readme",
+  "dependencies": {
+    "lodash": "3.10.1"
+  },
+  "devDependencies": {
+    "babel": "5.8.23",
+    "chai": "3.3.0",
+    "codecov.io": "0.1.6",
+    "commitizen": "2.1.0",
+    "cz-conventional-changelog": "1.1.4",
+    "ghooks": "0.3.2",
+    "istanbul": "0.4.0",
+    "mocha": "2.3.3",
+    "browserify": "11.2.0",
+    "react": "0.14.0",
+    "react-dom": "0.14.0",
+    "reactify": "1.1.1",
+    "semantic-release": "^4.3.5"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test && npm run check-coverage"
+    }
+  }
+}
