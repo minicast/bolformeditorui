@@ -34,3 +34,6 @@ node_modules
 
 # Coverage
 coverage
+
+# Drafts
+package-alt.json

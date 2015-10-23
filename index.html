@@ -3,10 +3,125 @@
   <head lang="en">
     <meta charset="UTF-8">
     <title>Formula Editor</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <style>
+      @media (min-width: 768px) {
+        .container {
+        }
+      }
+      .container {
+        width: auto;
+        margin: 0;
+        margin-left: 3px;
+        margin-right: 3px;
+        min-height: 100%;
+      }
+
+      .panel {
+        margin: 0;
+      }
+      .output-scroll {
+        overflow: auto;
+      }
+      .panel-title {
+        text-align: center;
+      }
+      .panel-body {
+        padding: 0;
+      }
+
+      .col-xs-4, .col-sm-4, .col-md-4,
+      .col-xs-8, .col-sm-8, .col-md-8 {
+        padding: 1px;
+      }
+
+
+    </style>
   </head>
   <body>
     <div id="container">container</div>
 
-    <script src="dist/browser.js"></script>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-xs-4 col-sm-4 col-md-4">
+    			<div class="panel panel-default">
+    				<div class="panel-heading">
+    					<h3 class="panel-title">
+    						Keyboard
+    					</h3>
+    				</div>
+    				<div class="panel-body">
+          		<div id="keyboard-editor" style="height:150px"></div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="col-xs-4 col-sm-4 col-md-4">
+    			<div class="panel panel-info">
+    				<div class="panel-heading">
+    					<h3 class="panel-title">
+    						LaTeX
+    					</h3>
+    				</div>
+    				<div class="panel-body">
+          		<div id="latex-editor" style="height:150px"></div>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="col-xs-4 col-sm-4col-md-4">
+    			<div class="panel panel-warning">
+    				<div class="panel-heading">
+    					<h3 class="panel-title">
+    						JSON
+    					</h3>
+    				</div>
+    				<div class="panel-body">
+          		<div id="json-editor" style="height:150px"></div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+
+      <div class="row">
+    		<div class="col-xs-4 col-sm-4 col-md-4">
+    			<div class="panel panel-default output-scroll">
+    				<div class="panel-body" style="padding-top:10px;padding-bottom:10px;padding-left:5px">
+          		<div id="unicode"></div>
+    				</div>
+    				<!-- <div class="panel-footer">
+    					unicode
+    				</div> -->
+    			</div>
+    		</div>
+    		<div class="col-xs-8 col-sm-8 col-md-8">
+    			<div class="panel panel-default output-scroll">
+    				<div class="panel-body" style="padding-top:10px;padding-bottom:10px;padding-left:5px">
+          		<div id="katex"></div>
+          		<div id="d3" style="float:left;"></div>
+    				</div>
+    				<!-- <div class="panel-footer">
+    					KaTeX
+    				</div> -->
+    			</div>
+    		</div>
+    		<!-- <div class="col-xs-4 col-sm-4col-md-4">
+    			<div class="panel panel-default">
+    				<div class="panel-body">
+          		<div id="d3-tree-layout"></div>
+    				</div>
+    				<div class="panel-footer">
+    					D3 tree layout
+    				</div>
+    			</div>
+    		</div> -->
+    	</div>
+      <!-- <div id="render-target"></div> -->
+    </div>
+
+
+    <script src="dist/bundle.js"></script>
   </body>
 </html>
