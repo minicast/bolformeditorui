@@ -7,6 +7,7 @@
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "babel src/index.jsx -o dist/index.js",
     "postbuild": "browserify ./dist/index.js -o ./dist/bundle.js -v",
+    "watch": "watchify src/index.jsx -t babelify --outfile dist/bundle.js -v",
     "commit": "git-cz",
     "pretest": "rm src/index.js && babel src/index.jsx -o src/index.js",
     "test": "istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js --compilers js:babel/register",
@@ -50,7 +51,8 @@
     "react": "0.14.0",
     "react-dom": "0.14.0",
     "reactify": "1.1.1",
-    "semantic-release": "^4.3.5"
+    "semantic-release": "^4.3.5",
+    "watchify": "3.4.0"
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"

@@ -2,6 +2,8 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var d3 = require("d3");
 
+console.log("message2");
+
 // avoid running the testwithout 'document' (for now)
 try {
   var availableDom = document;
@@ -113,6 +115,10 @@ var bolformula = require("bolformula");
       // var tree = d3json || "{}";
       // console.log(JSON.parse(tree));
       // Session.set("tree", [tree]);
+
+      var d3String = JSON.stringify(d3json, null, 2);
+      d3Editor.setValue('');
+      d3Editor.insert(d3String);
 
       // console.log(d3json);
 
@@ -292,16 +298,25 @@ var bolformula = require("bolformula");
 // }`);
   // keyboardEditor.session._emit('change');
   // keyboardEditor.getSession()._emit('change');
+
+  var d3Editor = ace.edit('d3-editor');
+  d3Editor.getSession().setMode('ace/mode/json');
+  d3Editor.setTheme('ace/theme/tomorrow');
+  d3Editor.getSession().setUseWrapMode(true);
+  d3Editor.getSession().setTabSize(2);
+  d3Editor.getSession().setUseSoftTabs(true);
+  d3Editor.$blockScrolling = Infinity;
+
   keyboardEditor.insert(
 `(
   (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)
-  >
-  (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
-  &
-  (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
-  |
-  ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
 )`);
+  // >
+  // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
+  // &
+  // (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
+  // |
+  // ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
 
 } // else !document
 
