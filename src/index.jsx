@@ -2,7 +2,7 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var d3 = require("d3");
 
-console.log("message2");
+// console.log("message2");
 
 // avoid running the testwithout 'document' (for now)
 try {
@@ -16,7 +16,78 @@ if (availableDom) {
 
 var FormulaEditor = React.createClass({
     render: function() {
-        return <div>Formula {this.props.name}</div>;
+        return <div>Formula {this.props.name}
+          <div className="container">
+            <div className="row">
+              <div className="col-xs-4 col-sm-4 col-md-4">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      Keyboard
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="keyboard-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 col-sm-4 col-md-4">
+                <div className="panel panel-info">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      LaTeX
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="latex-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 col-sm-4col-md-4">
+                <div className="panel panel-warning">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      JSON
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="json-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-xs-4 col-sm-4col-md-4">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      D3 Tree Data
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="d3-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 col-sm-4 col-md-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0">
+                <div className="panel panel-default output-scroll">
+                  <div className="panel-body" style={{"padding-top": 10 +"px", "padding-bottom": 10 + "px", "padding-left": 5 +"px"}}>
+                    <div id="unicode"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-8 col-sm-8 col-md-8">
+                <div className="panel panel-default output-scroll">
+                  <div className="panel-body" style={{"padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px"}}>
+                    <div id="katex"></div>
+                    <div id="d3" style={{float: "left"}}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>;
+        </div>
     }
 });
 
@@ -92,7 +163,7 @@ var bolformula = require("bolformula");
       // katex.render(latexString, katexElement);
       var htmlKatex = katex.renderToString(latexString);
       katexElement.innerHTML = htmlKatex;
-      // returns <span class="katex"> ... result ... </span>
+      // returns <span className="katex"> ... result ... </span>
 
 
       var unicodeString = bolformula.getUnicode(stringPriorityOperators)
