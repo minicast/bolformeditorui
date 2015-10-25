@@ -32,7 +32,7 @@ var FormulaEditor = React.createClass({
                 </div>
               </div>
               <div className="col-xs-4 col-sm-4 col-md-4">
-                <div className="panel panel-info">
+                <div className="panel panel-default">
                   <div className="panel-heading">
                     <h3 className="panel-title">
                       LaTeX
@@ -59,7 +59,7 @@ var FormulaEditor = React.createClass({
 
             <div className="row">
               <div className="col-xs-4 col-sm-4col-md-4">
-                <div className="panel panel-default">
+                <div className="panel panel-info">
                   <div className="panel-heading">
                     <h3 className="panel-title">
                       D3 Tree Data
@@ -70,16 +70,16 @@ var FormulaEditor = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="col-xs-4 col-sm-4 col-md-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0">
+              <div className="col-xs-8 col-sm-8 col-md-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0">
                 <div className="panel panel-default output-scroll">
-                  <div className="panel-body" style={{"padding-top": 10 +"px", "padding-bottom": 10 + "px", "padding-left": 5 +"px"}}>
+                  <div className="panel-body" style={{paddingTop: 10 +"px", paddingBottom: 10 + "px", paddingLeft: 5 +"px"}}>
                     <div id="unicode"></div>
                   </div>
                 </div>
               </div>
               <div className="col-xs-8 col-sm-8 col-md-8">
                 <div className="panel panel-default output-scroll">
-                  <div className="panel-body" style={{"padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px"}}>
+                  <div className="panel-body" style={{paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px"}}>
                     <div id="katex"></div>
                     <div id="d3" style={{float: "left"}}></div>
                   </div>
@@ -167,8 +167,8 @@ var bolformula = require("bolformula");
 
 
       var unicodeString = bolformula.getUnicode(stringPriorityOperators)
-        .replace(/\(/g,' (')
-        .replace(/\)/g,') ')
+        .replace(/\(/g,'( ')
+        .replace(/\)/g,' )')
       var unicodeElement = document.getElementById("unicode");
       unicodeElement.innerHTML = "";
       unicodeElement.innerHTML = unicodeString;
@@ -193,10 +193,9 @@ var bolformula = require("bolformula");
 
       // console.log(d3json);
 
-      var treeData = [d3json];
+      var treeData = d3json;
       // var treeData = props.data;
       // console.log(treeData);
-
 
 
 // componentDidMount: function() {
@@ -335,6 +334,9 @@ var bolformula = require("bolformula");
     //     );
     // }
 
+    // var d3StringPlus = JSON.stringify(treeData, null, 2);
+    // d3Editor.setValue('');
+    // d3Editor.insert(d3StringPlus);
 
     }
   });

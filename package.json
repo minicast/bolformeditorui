@@ -7,6 +7,7 @@
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "babel src/index.jsx -o dist/index.js",
     "postbuild": "browserify ./dist/index.js -o ./dist/bundle.js -v",
+    "prewatch": "rm -rf dist && mkdir dist && touch dist/bundle.js",
     "watch": "watchify src/index.jsx -t babelify --outfile dist/bundle.js -v",
     "commit": "git-cz",
     "pretest": "rm src/index.js && babel src/index.jsx -o src/index.js",
@@ -30,7 +31,7 @@
   },
   "homepage": "https://github.com/minicast/bolformeditorui#readme",
   "dependencies": {
-    "bolformula": "0.0.3",
+    "bolformula": "0.0.5",
     "bootstrap": "3.3.5",
     "brace": "0.5.1",
     "d3": "3.5.6",

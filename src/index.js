@@ -7,6 +7,8 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var d3 = require("d3");
 
+// console.log("message2");
+
 // avoid running the testwithout 'document' (for now)
 try {
   var availableDom = document;
@@ -24,7 +26,135 @@ if (availableDom) {
         "div",
         null,
         "Formula ",
-        this.props.name
+        this.props.name,
+        React.createElement(
+          "div",
+          { className: "container" },
+          React.createElement(
+            "div",
+            { className: "row" },
+            React.createElement(
+              "div",
+              { className: "col-xs-4 col-sm-4 col-md-4" },
+              React.createElement(
+                "div",
+                { className: "panel panel-default" },
+                React.createElement(
+                  "div",
+                  { className: "panel-heading" },
+                  React.createElement(
+                    "h3",
+                    { className: "panel-title" },
+                    "Keyboard"
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "panel-body" },
+                  React.createElement("div", { id: "keyboard-editor", style: { height: 150 + "px" } })
+                )
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "col-xs-4 col-sm-4 col-md-4" },
+              React.createElement(
+                "div",
+                { className: "panel panel-info" },
+                React.createElement(
+                  "div",
+                  { className: "panel-heading" },
+                  React.createElement(
+                    "h3",
+                    { className: "panel-title" },
+                    "LaTeX"
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "panel-body" },
+                  React.createElement("div", { id: "latex-editor", style: { height: 150 + "px" } })
+                )
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "col-xs-4 col-sm-4col-md-4" },
+              React.createElement(
+                "div",
+                { className: "panel panel-warning" },
+                React.createElement(
+                  "div",
+                  { className: "panel-heading" },
+                  React.createElement(
+                    "h3",
+                    { className: "panel-title" },
+                    "JSON"
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "panel-body" },
+                  React.createElement("div", { id: "json-editor", style: { height: 150 + "px" } })
+                )
+              )
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "row" },
+            React.createElement(
+              "div",
+              { className: "col-xs-4 col-sm-4col-md-4" },
+              React.createElement(
+                "div",
+                { className: "panel panel-default" },
+                React.createElement(
+                  "div",
+                  { className: "panel-heading" },
+                  React.createElement(
+                    "h3",
+                    { className: "panel-title" },
+                    "D3 Tree Data"
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: "panel-body" },
+                  React.createElement("div", { id: "d3-editor", style: { height: 150 + "px" } })
+                )
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "col-xs-4 col-sm-4 col-md-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0" },
+              React.createElement(
+                "div",
+                { className: "panel panel-default output-scroll" },
+                React.createElement(
+                  "div",
+                  { className: "panel-body", style: { "padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px" } },
+                  React.createElement("div", { id: "unicode" })
+                )
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "col-xs-8 col-sm-8 col-md-8" },
+              React.createElement(
+                "div",
+                { className: "panel panel-default output-scroll" },
+                React.createElement(
+                  "div",
+                  { className: "panel-body", style: { "padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px" } },
+                  React.createElement("div", { id: "katex" }),
+                  React.createElement("div", { id: "d3", style: { float: "left" } })
+                )
+              )
+            )
+          )
+        ),
+        ";"
       );
     }
   });
@@ -162,7 +292,7 @@ if (availableDom) {
       // katex.render(latexString, katexElement);
       var htmlKatex = katex.renderToString(latexString);
       katexElement.innerHTML = htmlKatex;
-      // returns <span class="katex"> ... result ... </span>
+      // returns <span className="katex"> ... result ... </span>
 
       var unicodeString = bolformula.getUnicode(stringPriorityOperators).replace(/\(/g, ' (').replace(/\)/g, ') ');
       var unicodeElement = document.getElementById("unicode");
@@ -180,6 +310,10 @@ if (availableDom) {
       // var tree = d3json || "{}";
       // console.log(JSON.parse(tree));
       // Session.set("tree", [tree]);
+
+      var d3String = JSON.stringify(d3json, null, 2);
+      d3Editor.setValue('');
+      d3Editor.insert(d3String);
 
       // console.log(d3json);
 
@@ -256,5 +390,20 @@ if (availableDom) {
   // }`);
   // keyboardEditor.session._emit('change');
   // keyboardEditor.getSession()._emit('change');
-  keyboardEditor.insert("(\n  (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)\n  >\n  (p > q > r > s) & (p & q & r & s) | (p | q | r | s)\n  &\n  (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)\n  |\n  ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)\n)");
+
+  var d3Editor = ace.edit('d3-editor');
+  d3Editor.getSession().setMode('ace/mode/json');
+  d3Editor.setTheme('ace/theme/tomorrow');
+  d3Editor.getSession().setUseWrapMode(true);
+  d3Editor.getSession().setTabSize(2);
+  d3Editor.getSession().setUseSoftTabs(true);
+  d3Editor.$blockScrolling = Infinity;
+
+  keyboardEditor.insert("(\n  (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)\n)");
+  // >
+  // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
+  // &
+  // (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
+  // |
+  // ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
 } // else !document
