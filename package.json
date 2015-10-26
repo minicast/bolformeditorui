@@ -68,6 +68,17 @@
   "config": {
     "ghooks": {
       "pre-commit": "npm run test && npm run check-coverage"
+    },
+    "blanket": {
+      "pattern": "src",
+      "data-cover-never": [
+        "dist",
+        "node_modules",
+        "tests",
+        "src-prev",
+        "coverage"
+      ],
+      "loader": "../../../tests/blanket-stub-jsx.js"
     }
   }
 }
