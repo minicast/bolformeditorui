@@ -60,7 +60,7 @@ if (availableDom) {
               { className: "col-xs-4 col-sm-4 col-md-4" },
               React.createElement(
                 "div",
-                { className: "panel panel-info" },
+                { className: "panel panel-default" },
                 React.createElement(
                   "div",
                   { className: "panel-heading" },
@@ -108,7 +108,7 @@ if (availableDom) {
               { className: "col-xs-4 col-sm-4col-md-4" },
               React.createElement(
                 "div",
-                { className: "panel panel-default" },
+                { className: "panel panel-info" },
                 React.createElement(
                   "div",
                   { className: "panel-heading" },
@@ -127,13 +127,13 @@ if (availableDom) {
             ),
             React.createElement(
               "div",
-              { className: "col-xs-4 col-sm-4 col-md-4 col-xs-offset-0 col-sm-offset-0 col-md-offset-0" },
+              { className: "col-xs-8 col-sm-8 col-md-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0" },
               React.createElement(
                 "div",
                 { className: "panel panel-default output-scroll" },
                 React.createElement(
                   "div",
-                  { className: "panel-body", style: { "padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px" } },
+                  { className: "panel-body", style: { paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px" } },
                   React.createElement("div", { id: "unicode" })
                 )
               )
@@ -146,7 +146,7 @@ if (availableDom) {
                 { className: "panel panel-default output-scroll" },
                 React.createElement(
                   "div",
-                  { className: "panel-body", style: { "padding-top": 10 + "px", "padding-bottom": 10 + "px", "padding-left": 5 + "px" } },
+                  { className: "panel-body", style: { paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px" } },
                   React.createElement("div", { id: "katex" }),
                   React.createElement("div", { id: "d3", style: { float: "left" } })
                 )
@@ -278,6 +278,10 @@ if (availableDom) {
       //     );
       // }
 
+      // var d3StringPlus = JSON.stringify(treeData, null, 2);
+      // d3Editor.setValue('');
+      // d3Editor.insert(d3StringPlus);
+
       ;
 
       var pnl = document.querySelector('.panel');
@@ -294,7 +298,7 @@ if (availableDom) {
       katexElement.innerHTML = htmlKatex;
       // returns <span className="katex"> ... result ... </span>
 
-      var unicodeString = bolformula.getUnicode(stringPriorityOperators).replace(/\(/g, ' (').replace(/\)/g, ') ');
+      var unicodeString = bolformula.getUnicode(stringPriorityOperators).replace(/\(/g, '( ').replace(/\)/g, ' )');
       var unicodeElement = document.getElementById("unicode");
       unicodeElement.innerHTML = "";
       unicodeElement.innerHTML = unicodeString;
@@ -317,7 +321,7 @@ if (availableDom) {
 
       // console.log(d3json);
 
-      var treeData = [d3json];
+      var treeData = d3json;
       // var treeData = props.data;
       // console.log(treeData);
 
