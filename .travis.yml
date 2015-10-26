@@ -10,16 +10,18 @@ notifications:
   email: false
 node_js:
   - '4'
+  # - "0.10"
 before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
 script:
-  - npm run test
-  - npm run check-coverage
-  - npm run build
-after_success:
-  - npm run report-coverage
+  - ./travis-test.sh
+  # - npm run test
+  # - npm run check-coverage
+  # - npm run build
+# after_success:
+  # - npm run report-coverage
   - npm run semantic-release
 branches:
   except:

@@ -2,27 +2,101 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var d3 = require("d3");
 
-// avoid running the testwithout 'document' (for now)
-try {
-  var availableDom = document;
-} catch (err) {
-  console.log(err);
-}
+// console.log("message2");
 
-if (availableDom) {
+// // avoid running the testwithout 'document' (for now)
+// try {
+//   var availableDom = document;
+// } catch (err) {
+//   console.log(err);
+// }
+//
+// if (availableDom) {
 
 
 var FormulaEditor = React.createClass({
     render: function() {
-        return <div>Formula {this.props.name}</div>;
-    }
+        return <div>Formula {this.props.name}
+          <div className="container">
+            <div className="row">
+              <div className="col-xs-4 col-sm-4 col-md-4">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      Keyboard
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="keyboard-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 col-sm-4 col-md-4">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      LaTeX
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="latex-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-4 col-sm-4col-md-4">
+                <div className="panel panel-warning">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      JSON
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="json-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-xs-4 col-sm-4col-md-4">
+                <div className="panel panel-info">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">
+                      D3 Tree Data
+                    </h3>
+                  </div>
+                  <div className="panel-body">
+                    <div id="d3-editor" style={{height: 150 + "px"}}></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-8 col-sm-8 col-md-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0">
+                <div className="panel panel-default output-scroll">
+                  <div className="panel-body" style={{paddingTop: 10 +"px", paddingBottom: 10 + "px", paddingLeft: 5 +"px"}}>
+                    <div id="unicode"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xs-8 col-sm-8 col-md-8">
+                <div className="panel panel-default output-scroll">
+                  <div className="panel-body" style={{paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px"}}>
+                    <div id="katex"></div>
+                    <div id="d3" style={{float: "left"}}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>;
+        </div>
+    },
+    
 });
 
 
 ReactDOM.render(
 	<FormulaEditor name="Editor" />,
     // assumes 'index.html' has a <div id="container"></div> (inside <body>)
-    document.getElementById("container")
+    document.getElementById("container-editor")
 );
 
 
@@ -90,12 +164,12 @@ var bolformula = require("bolformula");
       // katex.render(latexString, katexElement);
       var htmlKatex = katex.renderToString(latexString);
       katexElement.innerHTML = htmlKatex;
-      // returns <span class="katex"> ... result ... </span>
+      // returns <span className="katex"> ... result ... </span>
 
 
       var unicodeString = bolformula.getUnicode(stringPriorityOperators)
-        .replace(/\(/g,' (')
-        .replace(/\)/g,') ')
+        .replace(/\(/g,'( ')
+        .replace(/\)/g,' )')
       var unicodeElement = document.getElementById("unicode");
       unicodeElement.innerHTML = "";
       unicodeElement.innerHTML = unicodeString;
@@ -114,12 +188,15 @@ var bolformula = require("bolformula");
       // console.log(JSON.parse(tree));
       // Session.set("tree", [tree]);
 
+      var d3String = JSON.stringify(d3json, null, 2);
+      d3Editor.setValue('');
+      d3Editor.insert(d3String);
+
       // console.log(d3json);
 
-      var treeData = [d3json];
+      var treeData = d3json;
       // var treeData = props.data;
       // console.log(treeData);
-
 
 
 // componentDidMount: function() {
@@ -258,6 +335,9 @@ var bolformula = require("bolformula");
     //     );
     // }
 
+    // var d3StringPlus = JSON.stringify(treeData, null, 2);
+    // d3Editor.setValue('');
+    // d3Editor.insert(d3StringPlus);
 
     }
   });
@@ -292,17 +372,27 @@ var bolformula = require("bolformula");
 // }`);
   // keyboardEditor.session._emit('change');
   // keyboardEditor.getSession()._emit('change');
+
+  var d3Editor = ace.edit('d3-editor');
+  d3Editor.getSession().setMode('ace/mode/json');
+  d3Editor.setTheme('ace/theme/tomorrow');
+  d3Editor.getSession().setUseWrapMode(true);
+  d3Editor.getSession().setTabSize(2);
+  d3Editor.getSession().setUseSoftTabs(true);
+  d3Editor.$blockScrolling = Infinity;
+
   keyboardEditor.insert(
 `(
   (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)
-  >
-  (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
-  &
-  (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
-  |
-  ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
 )`);
+  // >
+  // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
+  // &
+  // (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
+  // |
+  // ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
 
-} // else !document
+// } // else !document
 
-export {};
+// export {};
+module.exports = FormulaEditor;
