@@ -4,7 +4,7 @@ var d3 = require("d3");
 
 var FormulaEditor = React.createClass({
   render: function() {
-    return <div>Formula {this.props.name}
+    return <div><abbr>Formula</abbr> {this.props.name}
       <div className="container">
         <div className="row">
           <div className="col-xs-4 col-sm-4 col-md-4">
@@ -314,12 +314,12 @@ var FormulaEditor = React.createClass({
     latexEditor.getSession().setTabSize(2);
     latexEditor.getSession().setUseSoftTabs(true);
     latexEditor.$blockScrolling = Infinity;
-//     latexEditor.insert(
-// `(
-//   (p \\land q)
-//   \\to
-//   (p \\lor q)
-// )`);
+    //     latexEditor.insert(
+    // `(
+    //   (p \\land q)
+    //   \\to
+    //   (p \\lor q)
+    // )`);
 
     var jsonEditor = ace.edit('json-editor');
     jsonEditor.getSession().setMode('ace/mode/json');
@@ -328,12 +328,12 @@ var FormulaEditor = React.createClass({
     jsonEditor.getSession().setTabSize(2);
     jsonEditor.getSession().setUseSoftTabs(true);
     jsonEditor.$blockScrolling = Infinity;
-//     jsonEditor.insert(
-// `{
-//   "junctor": "&",
-//   "left": "p",
-//   "right": "q"
-// }`);
+    //     jsonEditor.insert(
+    // `{
+    //   "junctor": "&",
+    //   "left": "p",
+    //   "right": "q"
+    // }`);
     // keyboardEditor.session._emit('change');
     // keyboardEditor.getSession()._emit('change');
 
@@ -346,11 +346,11 @@ var FormulaEditor = React.createClass({
     d3Editor.$blockScrolling = Infinity;
 
     keyboardEditor.insert(
-`(
-  ( p > q ^ ~(p & ~q) )
-  ^
-  ~( ( p > q) ^ (~p | q) )
-)`);
+    `(
+      ( p > q ^ ~(p & ~q) )
+      ^
+      ~( ( p > q) ^ (~p | q) )
+    )`);
     // (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)
     // >
     // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
