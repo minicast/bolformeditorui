@@ -5,13 +5,8 @@ var React = require('react');
 var BigComplicatedComponent = React.createClass({
   render: function() {
     console.log('Thinking really hard!');
-    return <div>42 from bundle</div>;
+    return <div>42</div>;
   }
 });
-
-React.render(
-  <BigComplicatedComponent/>,
-  document.getElementById('container')
-);
 
 module.exports = BigComplicatedComponent;

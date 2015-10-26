@@ -88,15 +88,14 @@ var FormulaEditor = React.createClass({
             </div>
           </div>;
         </div>
-    },
-    
+    }
 });
 
 
 ReactDOM.render(
 	<FormulaEditor name="Editor" />,
     // assumes 'index.html' has a <div id="container"></div> (inside <body>)
-    document.getElementById("container-editor")
+    document.getElementById("container")
 );
 
 

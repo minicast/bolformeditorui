@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "rm -rf dist && mkdir dist && rm -rf browser && mkdir browser",
-    "build": "babel src -d dist",
-    "postbuild": "browserify ./dist/BigComplicatedComponent.js -o ./browser/bundle.js -v",
+    "prebuild": "rm -rf dist -v && mkdir dist -v && mkdir dist/browser -v",
+    "build": "babel src -d dist --verbose",
+    "postbuild": "browserify ./dist/render.js -o ./dist/browser/bundle.js -v",
     "prewatch": "if [ -d dist ]; then { rm -rf dist && mkdir dist && touch dist/bundle.js; } fi",
     "watch": "watchify src/index.jsx -t babelify --outfile dist/bundle.js -v",
     "commit": "git-cz",
