@@ -1,4 +1,5 @@
-var React = require('react/addons');
+// var React = require('react/addons');
+var React = require('react');
 var BigComplicatedComponent = require('./BigComplicatedComponent.js');
 // var FormulaEditor = require('./FormulaEditor.js');
 
