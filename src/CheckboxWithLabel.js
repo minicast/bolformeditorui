@@ -1,7 +1,7 @@
 // var React = require('react/addons');
 var React = require('react');
 var BigComplicatedComponent = require('./BigComplicatedComponent.js');
-// var FormulaEditor = require('./FormulaEditor.js');
+var FormulaEditor = require('./FormulaEditor.js');
 
 var CheckboxWithLabel = React.createClass({
   getInitialState: function() {
@@ -22,10 +22,10 @@ var CheckboxWithLabel = React.createClass({
         {this.state.isChecked ? this.props.labelOn : this.props.labelOff}
         <BigComplicatedComponent />
       </label>
+      <FormulaEditor  name="Editor"/>
     </div>
-    );
+    )
   }
 });
-      // <FormulaEditor  name="Editor"/>
 
 module.exports = CheckboxWithLabel;

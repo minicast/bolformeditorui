@@ -3,7 +3,8 @@ require('./testdom')('<html><body></body></html>');
 
 // Replace BigComplicatedComponent.js with a stub component.
 global.reactModulesToStub = [
-  'BigComplicatedComponent.js'
+  'BigComplicatedComponent.js',
+  'FormulaEditor.js'
 ];
 
 var assert = require('assert');
