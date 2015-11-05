@@ -89,7 +89,7 @@ var FormulaEditor = React.createClass({
           </div>;
         </div>
     },
-    
+
 });
 
 

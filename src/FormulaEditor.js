@@ -4,7 +4,8 @@ var d3 = require("d3");
 
 var FormulaEditor = React.createClass({
   render: function() {
-    return <div><abbr>Formula</abbr> {this.props.name}
+    return <div>
+      <h2 style={{color:"blue"}}>Formula</h2> {this.props.name}
       <div className="container">
         <div className="row">
           <div className="col-xs-4 col-sm-4 col-md-4">
@@ -15,7 +16,7 @@ var FormulaEditor = React.createClass({
                 </h3>
               </div>
               <div className="panel-body">
-                <div id="keyboard-editor" style={{height: 150 + "px"}}></div>
+                <div id="keyboard-editor" style={{height: 190 + "px"}}></div>
               </div>
             </div>
           </div>
@@ -27,7 +28,7 @@ var FormulaEditor = React.createClass({
                 </h3>
               </div>
               <div className="panel-body">
-                <div id="latex-editor" style={{height: 150 + "px"}}></div>
+                <div id="latex-editor" style={{height: 190 + "px"}}></div>
               </div>
             </div>
           </div>
@@ -39,7 +40,7 @@ var FormulaEditor = React.createClass({
                 </h3>
               </div>
               <div className="panel-body">
-                <div id="json-editor" style={{height: 150 + "px"}}></div>
+                <div id="json-editor" style={{height: 190 + "px"}}></div>
               </div>
             </div>
           </div>
@@ -54,12 +55,15 @@ var FormulaEditor = React.createClass({
                 </h3>
               </div>
               <div className="panel-body">
-                <div id="d3-editor" style={{height: 150 + "px"}}></div>
+                <div id="d3-editor" style={{height: 190 + "px"}}></div>
               </div>
             </div>
-          </div>
-          <div className="col-xs-8 col-sm-8 col-md-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0">
-            <div className="panel panel-default output-scroll">
+            <div className="panel panel-default output-scroll" style={{marginTop: 3 +"px"}}>
+              <div className="panel-heading">
+                <h3 className="panel-title">
+                  Unicode
+                </h3>
+              </div>
               <div className="panel-body" style={{paddingTop: 10 +"px", paddingBottom: 10 + "px", paddingLeft: 5 +"px"}}>
                 <div id="unicode"></div>
               </div>
@@ -67,8 +71,9 @@ var FormulaEditor = React.createClass({
           </div>
           <div className="col-xs-8 col-sm-8 col-md-8">
             <div className="panel panel-default output-scroll">
-              <div className="panel-body" style={{paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px"}}>
+              <div className="panel-body output-scroll" style={{paddingTop: 10 + "px", paddingBottom: 10 + "px", paddingLeft: 5 + "px"}}>
                 <div id="katex"></div>
+                <div id="statistics"></div>
                 <div id="d3" style={{float: "left"}}></div>
               </div>
             </div>
@@ -169,25 +174,38 @@ var FormulaEditor = React.createClass({
         // var treeData = props.data;
         // console.log(treeData);
 
+        var treeLeafs = bolformula.getD3leafs(keyParsed);
+        var leafWidth = 40;
+        var svgWidth = treeLeafs * leafWidth;
+
+        var treeDepth = bolformula.getD3depth(keyParsed);
+        var edgeDepth = 40;
+        var svgHeight = treeDepth * edgeDepth;
+
+        var el = document.getElementById("statistics");
+        el.innerHTML = 'syntax tree depth: ' + treeDepth + ' &nbsp; &nbsp; ' + 'syntax tree branching factor: ' + treeLeafs;
 
       // componentDidMount: function() {
         // var el = this.getDOMNode(); // This is de div we are rendering
         var el = document.getElementById("d3");
 
+        // d3.select("svg").selectAll("*").remove();
+        d3.select("svg").remove();
+
         var svg = d3.select(el)
             .insert("svg")
             // .attr("width", this.props.width )
-            .attr("width", 500 )
+            .attr("width", svgWidth) // 500
             // .attr("height", this.props.height );
-            .attr("height", 350 );
+            .attr("height", svgHeight ); // 350
 
             // this.updateTree(this.props);
             // this.updateTree(this.props);
       // },
 
         var margin = { top: 5, right: 5, bottom: 5, left: 5 };
-        var width = 500 - margin.right - margin.left; // this.props.width - margin.right - margin.left;
-        var height = 350 - margin.top - margin.bottom; //this.props.height - margin.top - margin.bottom;
+        var width = svgWidth - margin.right - margin.left; // this.props.width - margin.right - margin.left;
+        var height = svgHeight - margin.top - margin.bottom; //this.props.height - margin.top - margin.bottom;
 
         // ************** Generate the tree diagram	 *****************
         var i = 0;
@@ -201,15 +219,13 @@ var FormulaEditor = React.createClass({
             return [d.x, d.y];
           });
 
-        d3.select("svg").selectAll("*").remove();
-
         var svg = d3.select("svg")
           // .append("g")
           .insert("g")
           .attr("width", width )
           .attr("height", height )
           .attr("transform",
-            `translate(${margin.left + margin.left},${margin.top + margin.bottom + 15})`
+            `translate(${margin.left + margin.left},${margin.top + margin.bottom + 10})`
           );
 
         var root = treeData[0];
@@ -224,7 +240,8 @@ var FormulaEditor = React.createClass({
 
           // Normalize for fixed-depth.
           nodes.forEach(function(d) {
-            d.y = d.depth * 50;
+            // d.y = d.depth * 50;
+            d.y = d.depth * edgeDepth;
           });
 
           // Declare the nodes…
@@ -261,6 +278,45 @@ var FormulaEditor = React.createClass({
             })
             .style("fill-opacity", 1)
             .style("font", "12px sans-serif");
+
+
+          nodeEnter
+            .append("rect")
+            .attr("width", function(d) {
+              if (this.previousElementSibling.clientWidth) {
+                return this.previousElementSibling.clientWidth + 10;
+              } else { //firefox (gecko-based browsers) & edge (all ie-brosers) have clientWidth 0
+                return this.previousElementSibling.childNodes[0].length * 5 + 10;
+              }
+            })
+            .attr('height', function() {
+              if (this.previousElementSibling.clientWidth) {
+                return this.previousElementSibling.clientHeight + 8;
+              } else {
+                return 20;
+              }
+            })
+            .attr('rx', 10).attr('ry', 10)
+            .style("fill", function(d) {
+              if (d.children) {
+                return 'DarkSeaGreen';
+              } else {
+                return 'CadetBlue';
+              }
+            })
+            .style('opacity', '0.5')
+            .attr('transform', function(d){
+                var xdev, ydev;
+                if (this.previousElementSibling.clientWidth) {
+                  xdev = (this.previousElementSibling.clientWidth+10)/2;
+                  ydev = (this.previousElementSibling.clientHeight+8)/2;
+                } else {
+                  xdev = (this.previousElementSibling.childNodes[0].length * 5 + 10)/2;
+                  ydev = 10;
+                }
+                return "translate("+ -xdev + ',' + -ydev + ')';
+            });
+
 
           // Declare the links…
           var link = svg
@@ -346,18 +402,19 @@ var FormulaEditor = React.createClass({
     d3Editor.$blockScrolling = Infinity;
 
     keyboardEditor.insert(
-    `(
-      ( p > q ^ ~(p & ~q) )
-      ^
-      ~( ( p > q) ^ (~p | q) )
-    )`);
-    // (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)
-    // >
-    // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
-    // &
-    // (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
-    // |
-    // ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
+`(
+  ( p > q ^ ~(p & ~q) )
+  ^
+  ~( ( p > q) ^ (~p | q) )
+  >
+  (p & q & r & s) > (p | q | r | s) > (p ^ q ^ r ^ s)
+)`);
+  // >
+  // (p > q > r > s) & (p & q & r & s) | (p | q | r | s)
+  // &
+  // (~p > q > r > s) & (p & ~q & r & s) | (p & q & ~r & s)
+  // |
+  // ~(p > q > r > ~s) & ~~(p & q & ~r & s) | ~~~(p & q & r & ~s)
   }
 });
 
