@@ -1,14 +1,13 @@
 {
   "name": "bolformeditorui",
   "description": "bolformeditorui",
-  "version": "0.0.1-semantic",
+  "version": "0.0.4",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rm -rf dist -v && mkdir dist -v && mkdir dist/browser -v",
-    "build": "babel src -d dist --verbose",
-    "postbuild": "browserify ./dist/render.js -o ./dist/browser/bundle.js -v",
-    "prewatch": "if [ -d dist ]; then { rm -rf dist && mkdir dist && mkdir dist/browser && touch dist/browser/bundle.js; } fi",
-    "watch": "watchify src/render.js -t babelify --outfile dist/browser/bundle.js -v",
+    "build": "babel --presets react src --out-dir dist -vd",
+    "build:watch": "babel --presets react src --watch --out-dir dist",
+    "watch": "watchify ./dist/render.js -o ./dist/browser/bundle.js -vd",
     "commit": "git-cz",
     "test": "mocha --compilers .:tests/compiler.js tests/*-test.js",
     "check-coverage": "istanbul check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
@@ -29,6 +28,8 @@
   },
   "homepage": "https://github.com/minicast/bolformeditorui#readme",
   "dependencies": {
+    "babel-preset-react": "6.1.2",
+    "babelify": "7.2.0",
     "bolformula": "0.1.1",
     "bootstrap": "3.3.5",
     "brace": "0.5.1",
@@ -36,6 +37,7 @@
     "katex": "0.5.1",
     "lodash": "3.10.1",
     "react": "0.14.2",
+    "react-dom": "0.14.2",
     "react-tools": "0.13.3"
   },
   "devDependencies": {
